@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write .",
+    "seed:sql": "echo \"Run supabase/seed.sql in Supabase SQL editor\"",
     "seed:users": "tsx scripts/create-test-users.ts"
   },
   "dependencies": {
