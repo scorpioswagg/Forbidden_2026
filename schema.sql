@@ -101,6 +101,8 @@ create table if not exists vault_media (
   user_id uuid not null references auth.users(id) on delete cascade,
   storage_path text not null,
   media_type text not null,
+  is_teaser boolean not null default false,
+  teaser_post_id uuid references posts(id) on delete set null,
   created_at timestamptz not null default now(),
   unique (user_id, storage_path)
 );

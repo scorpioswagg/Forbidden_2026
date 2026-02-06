@@ -247,7 +247,7 @@ create policy "Users can view own points"
 create policy "Users can create points entries"
   on public.points_ledger
   for insert
-  with check (public.is_admin());
+  with check (auth.uid() = user_id);
 
 create policy "Admins can manage points"
   on public.points_ledger
