@@ -1,6 +1,8 @@
 "use server";
 
 import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { sendEmail } from "@/lib/email/resend";
+import { welcomeTemplate } from "@/lib/email/templates";
 
 export type OnboardingState = {
   success: boolean;
@@ -52,6 +54,10 @@ export async function submitOnboarding(formData: FormData): Promise<OnboardingSt
 
   if (error) {
     return { success: false, message: error.message };
+  }
+
+  if (user.email) {
+    await sendEmail(user.email, welcomeTemplate({ name: displayName ?? undefined }));
   }
 
   return { success: true };
