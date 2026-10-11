@@ -10,7 +10,9 @@ const PUBLIC_PATHS = [
   "/legal",
   "/legal/privacy",
   "/legal/terms",
-  "/legal/guidelines"
+  "/legal/guidelines",
+  "/legal/dmca",
+  "/legal/appeals"
 ];
 
 export async function middleware(request: NextRequest) {
@@ -63,11 +65,12 @@ export async function middleware(request: NextRequest) {
 
   const { data: profile } = await supabase
     .from("profiles")
-    .select("id, onboarding_completed_at")
+    .select("id, onboarding_completed_at, role")
     .eq("id", user.id)
     .maybeSingle();
 
   const onboardingComplete = Boolean(profile?.onboarding_completed_at);
+  const isAdmin = profile?.role === "admin" || profile?.role === "super_admin";
 
   if (isAuthRoute) {
     const redirectUrl = request.nextUrl.clone();
@@ -84,6 +87,12 @@ export async function middleware(request: NextRequest) {
   if (isFeedRoute && !onboardingComplete) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/onboarding";
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (pathname.startsWith("/admin") && !isAdmin) {
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = "/feed";
     return NextResponse.redirect(redirectUrl);
   }
 

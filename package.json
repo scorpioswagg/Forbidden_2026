@@ -7,12 +7,14 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "prettier --write ."
+    "seed:sql": "echo \"Run supabase/seed.sql in Supabase SQL editor\"",
+    "seed:users": "tsx scripts/create-test-users.ts"
   },
   "dependencies": {
     "@supabase/ssr": "^0.4.0",
     "@supabase/supabase-js": "^2.45.4",
     "next": "14.2.5",
+    "resend": "^3.5.0",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },
@@ -27,6 +29,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6",
     "tailwindcss": "^3.4.9",
+    "tsx": "^4.19.2",
     "typescript": "^5.5.4"
   }
 }
